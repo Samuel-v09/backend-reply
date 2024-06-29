@@ -9,6 +9,7 @@
   "author": "Samuel Victor",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "oracledb": "^6.5.1"
   }
 }
