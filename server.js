@@ -6,9 +6,9 @@ const oracledb = require('oracledb');
 app.use(express.json());
 
 const db_oracle_config ={
-    user: 'Usuário',
-    password: 'Senha',
-    connectString: 'SID',
+    user: 'ADMIN',
+    password: 'Smartmonitoring123',
+    connectString: 'dcrsmn_high',
     poolMin : 10,
     poolMax: 10,
     queueTimeout: 60000   
