@@ -4,16 +4,17 @@ const PORTA = 3000;
 const oracledb = require('oracledb');
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
+require('dotenv').config();
 app.use(express.json());
 
 const db_oracle_config ={
-    user: 'ADMIN',
-    password: 'Smartmonitoring123',
-    connectString: 'dcrsmn_high',
-    poolMin : 10,
-    poolMax: 10,
-    queueTimeout: 60000   
-
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    connectString: process.env.DB_CONNECT_STRING,
+    poolMin : parseInt(process.env.DB_POOL_MIN, 10),
+    poolMax: parseInt(process.env.DB_POOL_MAX, 10),
+    queueTimeout: parseInt(process.env.DB_QUEUE_TIMEOUT, 10)
+    
 };
 
 async function conexao_pool () {
