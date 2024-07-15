@@ -14,13 +14,14 @@ const db_oracle_config ={
     poolMin : parseInt(process.env.DB_POOL_MIN, 10),
     poolMax: parseInt(process.env.DB_POOL_MAX, 10),
     queueTimeout: parseInt(process.env.DB_QUEUE_TIMEOUT, 10)
-    
+
 };
 
 async function conexao_pool () {
     try{
         await oracledb.createPool(db_oracle_config);
         console.log('Pool de Conexão com Banco de Dados feito com Sucesso');
+        console,log('Adicionando variáveis de Ambiente');
     } catch (err) {
         console.error('Erro ao criar o pool de conexão com Banco de Dados', err);
         process.exit(1);
