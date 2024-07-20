@@ -11,10 +11,6 @@ const db_oracle_config ={
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     connectString: process.env.DB_CONNECT_STRING,
-    poolMin : parseInt(process.env.DB_POOL_MIN, 10),
-    poolMax: parseInt(process.env.DB_POOL_MAX, 10),
-    queueTimeout: parseInt(process.env.DB_QUEUE_TIMEOUT, 10)
-
 };
 
 async function conexao_pool () {
