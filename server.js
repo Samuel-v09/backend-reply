@@ -7,7 +7,8 @@ require('dotenv').config();
 app.use(express.json());
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
 });
 
 app.get('/', (req, res) =>{
