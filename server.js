@@ -11,15 +11,20 @@ const pool = new Pool({
     ssl: process.env.ssl
 });
 
-app.get('/', (req, res) =>{
-    res.send('Hello World');
+pool.query('SELECT NOW()' , (err, res) => {
+    if (err){
+        console.error('Erro ao Conectar ao Banco de Dados PostgreSQL', err);
+    } else {
+        console.log('Conexão feita com sucesso ao Banco de Dados PostgreSQL', res.rows);
+    }
 });
 
-app.get('/ping', async (req, res) => {
-    const result = await pool.query('SELECT NOW()')
-    return res.json(result.rows[0]);
+app.get('/', (req, res) =>{
+    res.send('Hello World');
 });
 
 app.listen(PORTA, () => {
      console.log(`Servidor conectado e rodando em http://localhost:${PORTA}`);
 });
+
+
