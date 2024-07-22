@@ -8,7 +8,7 @@ app.use(express.json());
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: true
+    ssl: process.env.ssl
 });
 
 app.get('/', (req, res) =>{
