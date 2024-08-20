@@ -3,7 +3,7 @@ const pool = require('../config/db');
 const criandoTabelasMotores = async () => {
     const client = await pool.connect();
     try {
-        console.log('Conectando ao Banco de Dados challenge_reply_db');
+        console.log('Conectando ao Banco de Dados db_teste_challenge');
         await client.query(
             `
             CREATE TABLE IF NOT EXISTS numero_coleta (
