@@ -1,49 +1,33 @@
-const express = require('express');
-const pool = require('./config/db');
-const app = express();
+const pool = require('../config/db');
 
-app.use(express.json());
-
-app.post('/inserir_dados_motores', async (req, res) => {
-    const { Motor01, Motor02 } = req.body;
-
-    const motores = [Motor01, Motor02];
-
+const criandoTabelasMotores = async () => {
     const client = await pool.connect();
     try {
-        // Inserir uma nova coleta
-        const insertColetaQuery = `
-            INSERT INTO numero_coleta DEFAULT VALUES RETURNING ColetaID;
-        `;
-        const result = await client.query(insertColetaQuery);
-        const coletaID = result.rows[0].coletaid;
+        console.log('Conectando ao Banco de Dados db_teste_challenge');
+        await client.query(
+            `
+            CREATE TABLE IF NOT EXISTS numero_coleta (
+                ColetaID SERIAL PRIMARY KEY,
+                DataHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
 
-        // Inserir dados dos motores
-        const insertMotorDataQuery = `
-            INSERT INTO dados_sensores_motores (ColetaID, MotorID, Temperatura, Frequencia, Corrente, Vibracao, PicoMax)
-            VALUES ($1, $2, $3, $4, $5, $6, $7);
-        `;
-        for (const motor of motores) {
-            await client.query(insertMotorDataQuery, [
-                coletaID,
-                motor.MotorID,
-                motor.Temperatura,
-                motor.Frequencia,
-                motor.Corrente,
-                motor.Vibracao,
-                motor.PicoMax
-            ]);
-        }
-
-        res.status(200).send('Dados inseridos com sucesso!');
+            CREATE TABLE IF NOT EXISTS dados_sensores_motores (
+                ColetaID INT REFERENCES numero_coleta(ColetaID),
+                MotorID VARCHAR(20),
+                Temperatura NUMERIC (10, 2) NOT NULL,
+                Frequencia NUMERIC (10, 2) NOT NULL,
+                Corrente NUMERIC (10, 2) NOT NULL,
+                Vibracao VARCHAR(10),
+                PicoMax NUMERIC(10, 2) NOT NULL
+            );
+            `
+        );
+        console.log('Tabelas motores criadas com sucesso');
     } catch (err) {
-        console.error('Erro ao inserir dados dos motores:', err);
-        res.status(500).send('Erro ao inserir dados dos motores');
+        console.error('Erro ao criar tabelas motores ou tabelas já existentes :', err);
     } finally {
         client.release();
     }
-});
+};
 
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
-});
+module.exports = criandoTabelasMotores;
