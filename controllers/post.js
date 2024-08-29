@@ -3,7 +3,7 @@ const pool = require('../config/db');
 const inserirDadosMotores = async (req, res) => {
     console.log('Dados Recebidos pelo Arduino', req.body);
 
-    const dadosSensoresMotoresVar = req.body.dados_sensores_motores[0];
+    const dadosSensoresMotoresVar = req.body.dados_sensores_motores;
 
     if (!dadosSensoresMotoresVar) {
         return res.status(400).send('Dados dos sensores dos motores não recebidos.');
