@@ -3,6 +3,10 @@ const app = express();
 const pool = require('./config/db');
 const motorRoutes = require('./routes/motorRoutes');
 
+const http = require('http');
+
+http.createServer(app).listen(80);
+
 app.use(express.json());
 app.use('/', motorRoutes);
 
