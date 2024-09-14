@@ -3,6 +3,8 @@ const app = express();
 const pool = require('./config/db');
 const motorRoutes = require('./routes/motorRoutes');
 
+app.use(express.json());
+
 const http = require('http');
 
 http.createServer(app).listen(80);
